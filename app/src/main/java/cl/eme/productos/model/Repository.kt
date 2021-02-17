@@ -1,21 +1,28 @@
 package cl.eme.productos.model
 
+import androidx.lifecycle.LiveData
 import timber.log.Timber
 
 class Repository {
-    private val productsDatabase = ProductsApplication.productsDatabase!!
-    val product= productsDatabase.productsDao().getProduct()
-}
-suspend fun getProducts() {
-    val response = RetrofitClient.instance().getProduct()
-    if (response.isSuccessful) {
-        response.body()?.let {
-            productsDatabase.productsDao().insert(it)
-        } }
-    else {
-        Timber.d("${response.errorBody()}")
-}
+    private val productsDao = ProductsApplication.productsDatabase!!.productsDao()
+    val getProductDetail = productsDao.getProductDetail(1)
 
+
+    suspend fun getProduct() {
+        Timber.d("getProducts from API")
+        val response = RetrofitClient.instance().getProduct()
+
+        when (response.isSuccessful) {
+            true -> {
+                response.body()?.let {
+                productsDao.insert(it)
+                }
+
+            }
+            false -> Timber.e("${response.code()} - ${response.errorBody()}")
+        }
+
+    }
 }
 
 

@@ -2,6 +2,7 @@ package cl.eme.productos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import timber.log.Timber
 
 /*
 
@@ -18,11 +19,11 @@ Lo que se espera que haga la aplicación es que cualquier usuario que la instal
 
 Código, arquitectura y dependencias
 
-1 [ ] Versionamiento con Git. El código debe quedar en github.com u otra plataforma de desarrollo cooperativo.
-2.[ ] Seguir los fundamentos de escritura de código (indentación, reutilización, sin código comentado)
-3.[ ] Seguir las convenciones de nombres.
-4.[ ] La arquitectura tiene que ser MVVM - LiveData - ROOM.
-5.[ ] Los request HTTP tienen que ser realizados utilizando Retrofit.
+1 [X] Versionamiento con Git. El código debe quedar en github.com u otra plataforma de desarrollo cooperativo.
+2.[X] Seguir los fundamentos de escritura de código (indentación, reutilización, sin código comentado)
+3.[X] Seguir las convenciones de nombres.
+4.[X] La arquitectura tiene que ser MVVM - LiveData - ROOM.
+5.[X] Los request HTTP tienen que ser realizados utilizando Retrofit.
 6.[ ] Utilice Kotlin coroutines para manejar el trabajo en segundo plano.
 7.[ ] Utilice las bibliotecas que estime necesario para hacer testing.
 8.[ ] Al menos 1 test unitarios.
@@ -47,7 +48,15 @@ https://my-json-server.typicode.com/Himuravidal/FakeAPIdata/details/1
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        initLog()
+
+    }
+    private fun initLog() {
+        Timber.plant(Timber.DebugTree())
+        Timber.d("On Create")
     }
 }

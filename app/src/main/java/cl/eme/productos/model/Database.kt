@@ -3,6 +3,7 @@ package cl.eme.productos.model
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import timber.log.Timber
 
 
 @Dao
@@ -13,8 +14,13 @@ interface ProductsDao {
     @Query("SELECT * FROM product")
     fun getProduct(): LiveData<List<Products>>
 
+/*
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(productDetail: List<ProductDetail>)
+*/
+
     @Query ("SELECT * FROM product WHERE id=:code")
-    fun getProductDetail(code: String) : LiveData<ProductDetail>
+    fun getProductDetail(code: Int) : LiveData<ProductDetail>
 
 }
 
@@ -30,6 +36,8 @@ interface ProductsDao {
 
         override fun onCreate() {
             super.onCreate()
-            productsDatabase = Room.databaseBuilder(this, ProductsDatabase::class.java, "Produc_DataBase").build()
+            Timber.d("onCreate de Application")
+            productsDatabase =
+                Room.databaseBuilder(this, ProductsDatabase::class.java, "Produc_DataBase").build()
         }
     }
