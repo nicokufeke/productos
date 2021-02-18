@@ -7,20 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import cl.eme.productos.databinding.ItemListProductBinding
 import cl.eme.productos.model.Products
+import coil.load
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductVH>() {
-
-    class ProductVH (val binding: ItemListProductBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(product: Products) {
-
-    }
-
-    }
 
     private var productList = listOf<Products>()
     private val selectedItem = MutableLiveData<Products>()
 
+
     fun selectedItem(): LiveData<Products> = selectedItem
+
+
     fun update(getProducts: List<Products>) {
         productList= getProducts
         notifyDataSetChanged()
@@ -34,9 +31,22 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductVH>() {
     override fun onBindViewHolder(holder: ProductVH, position: Int) {
     val product = productList[position]
         holder.bind(product)
+        holder.itemView.setOnClickListener {
+        selectedItem.value= product
+        }
     }
 
     override fun getItemCount(): Int {
     return productList.size
+
     }
+    class ProductVH (val binding: ItemListProductBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: Products) {
+            binding.rvName.text = product.name
+            binding.rvPrice.text = product.price
+            binding.rvimage.load(product.image)
+        }
+
+    }
+
 }

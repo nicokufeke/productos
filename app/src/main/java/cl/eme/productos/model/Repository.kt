@@ -5,8 +5,8 @@ import timber.log.Timber
 
 class Repository {
     private val productsDao = ProductsApplication.productsDatabase!!.productsDao()
-    val getProductDetail = productsDao.getProductDetail(1)
-
+    val getProduct = productsDao.getProduct()
+    val getProductDetail = productsDao.getProductDetail()
 
     suspend fun getProduct() {
         Timber.d("getProducts from API")
@@ -15,13 +15,33 @@ class Repository {
         when (response.isSuccessful) {
             true -> {
                 response.body()?.let {
-                productsDao.insert(it)
+                    productsDao.insertProduct(it)
                 }
 
             }
             false -> Timber.e("${response.code()} - ${response.errorBody()}")
         }
+        fun getProductId(code: Int): LiveData<Products> {
+            return productsDao.getProductId(code)
+        }
 
+        suspend fun getProductDetail() {
+            Timber.d("getProductsDetails from API")
+            val responseDetail = RetrofitClient.instance().getProductDetail()
+
+            when (responseDetail.isSuccessful) {
+                true -> {
+                    responseDetail.body()?.let {
+                        productsDao.insertProductDetail()
+                    }
+
+                }
+                false -> Timber.e("${responseDetail.code()} - ${responseDetail.errorBody()}")
+            }
+            fun getProductDetail(code: Int): LiveData<ProductDetail> {
+                return productsDao.getProductDetailId(code)
+            }
+        }
     }
 }
 

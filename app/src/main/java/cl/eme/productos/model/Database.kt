@@ -9,18 +9,22 @@ import timber.log.Timber
 @Dao
 interface ProductsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(products: List<Products>)
+    suspend fun insertProduct(productsList: List<Products>)
 
     @Query("SELECT * FROM product")
     fun getProduct(): LiveData<List<Products>>
 
-/*
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(productDetail: List<ProductDetail>)
-*/
-
     @Query ("SELECT * FROM product WHERE id=:code")
-    fun getProductDetail(code: Int) : LiveData<ProductDetail>
+    fun getProductId(code: Int) : LiveData<Products>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertProductDetail(productDetail: List<ProductDetail>)
+
+    @Query ("SELECT * FROM productDetail")
+    fun getProductDetail(): LiveData<List<ProductDetail>>
+
+    @Query ("SELECT * FROM productDetail WHERE id=:code")
+    fun getProductDetailId(code: Int): LiveData<ProductDetail>
 
 }
 

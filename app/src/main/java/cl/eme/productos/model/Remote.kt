@@ -17,7 +17,9 @@ interface ProductAPI {
 }
 
 // Cliente Retrofit
+
 const val BASE_URL = "https://my-json-server.typicode.com/Himuravidal/FakeAPIdata/"
+
 class RetrofitClient {
     companion object {
 
