@@ -25,14 +25,14 @@ class Repository {
             return productsDao.getProductId(code)
         }
 
-        suspend fun getProductDetail() {
+        suspend fun getProductDetail(code : Int) {
             Timber.d("getProductsDetails from API")
-            val responseDetail = RetrofitClient.instance().getProductDetail()
+            val responseDetail = RetrofitClient.instance().getProductDetail(code)
 
             when (responseDetail.isSuccessful) {
                 true -> {
                     responseDetail.body()?.let {
-                        productsDao.insertProductDetail()
+                        productsDao.insertProductDetail(it)
                     }
 
                 }

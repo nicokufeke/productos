@@ -21,7 +21,7 @@ data class ProductDetail (
     val name: String,
     val price: String,
     val image: String,
-    val description: List<String>,
+    val description: String,
     val lastPrice: String,
     val credit: String,
         )

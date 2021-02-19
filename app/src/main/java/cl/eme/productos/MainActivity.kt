@@ -1,7 +1,9 @@
 package cl.eme.productos
 
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import timber.log.Timber
 
 /*
@@ -75,5 +77,7 @@ class MainActivity : AppCompatActivity() {
     private fun initLog() {
         Timber.plant(Timber.DebugTree())
         Timber.d("On Create")
+        Log.d("Tag", "On Create")
     }
+
 }

@@ -4,6 +4,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 interface ProductAPI {
@@ -11,8 +12,8 @@ interface ProductAPI {
     @GET("products/")
     suspend fun getProduct() : Response<List<Products>>
 
-    @GET("details/1")
-    suspend fun getProductDetail() : Response<ProductDetail>
+    @GET("details/{pid}")
+    suspend fun getProductDetail(@Path("pid") id: Int) : Response<ProductDetail>
 
 }
 
